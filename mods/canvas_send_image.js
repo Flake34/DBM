@@ -131,14 +131,17 @@ action: function(cache) {
 	const canvas = Canvas.createCanvas(image.width,image.height);
 	const ctx = canvas.getContext('2d');
 	ctx.drawImage(image, 0, 0, image.width, image.height)
+	var fs = require("fs");
+	var buf = canvas.toBuffer();
+	fs.writeFileSync("test.png", buf);
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'image.png');
 	if(Array.isArray(target)) {
 		this.callListFunc(target, 'send', [this.evalMessage(data.message, cache),attachment]);
 	} else if(target && target.send) {
 		target.send(this.evalMessage(data.message, cache),attachment);
 	} else {
-		this.callNextAction(cache);
 	}
+	this.callNextAction(cache);
 },
 
 //---------------------------------------------------------------------
