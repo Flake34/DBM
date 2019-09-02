@@ -25,6 +25,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Base Convert
 - Canvas Edit Image Border
 - Canvas Generate Progress Bar
+- Canvas Save Image
 
 ## Raw Data Preview
 - curse_word_detect_event
@@ -55,6 +56,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - **Base Convert** Convert range from base-2 to base-36
 - **Canvas Edit Image Border** Edit the image border with circle and rounded corner feature
 - **Canvas Generate Progress Bar** Generate to basic progress bar or circle progress bar
+- **Canvas Save Image** Save canvas image to local and turn to image url for other actions
 
 ## Raw Data Function
 - **curse_word_detect_event** This event will detect all message send by all of member and then detect if include in the `curse list`
