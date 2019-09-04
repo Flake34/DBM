@@ -80,3 +80,6 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Put the `.ttf` file to bot's fonts directory
 - Install the font to system
 - Run the bot and check for console
+2. **Canvas Image Filter** need install package from npm
+- Link : https://www.npmjs.com/package/imagedata-filters
+- `https://www.npmjs.com/package/imagedata-filters`
