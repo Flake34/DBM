@@ -82,4 +82,4 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Run the bot and check for console
 2. **Canvas Image Filter** need install package from npm
 - Link : https://www.npmjs.com/package/imagedata-filters
-- `https://www.npmjs.com/package/imagedata-filters`
+- Install `npm i imagedata-filters`
