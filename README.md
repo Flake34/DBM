@@ -27,6 +27,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Canvas Generate Progress Bar
 - Canvas Save Image
 - Canvas Image Filter
+- Convert Text to List
 
 ## Raw Data Preview
 - curse_word_detect_event
@@ -59,7 +60,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - **Canvas Generate Progress Bar** Generate to basic progress bar or circle progress bar
 - **Canvas Save Image** Save canvas image to local and turn to image url for other actions
 - **Canvas Image Filter** Add filter with value to image
-
+- **Convert Text to List** Directly convert text to list with separator
 ## Raw Data Function
 - **curse_word_detect_event** This event will detect all message send by all of member and then detect if include in the `curse list`
 - **rank_command** Require mod `Store Member Data List` A rank system allow find the command author `xp` data and rank in global
@@ -80,6 +81,11 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Put the `.ttf` file to bot's fonts directory
 - Install the font to system
 - Run the bot and check for console
+
 2. **Canvas Image Filter** need install package from npm
 - Link : https://www.npmjs.com/package/imagedata-filters
 - Install `npm i imagedata-filters`
+
+3. **Convert Text to List** Addition note to separator
+- If your text is using newline, suggest put `[\r\n]+` to separator input box
+- If your text is using `,`, put `,` to separator input box
