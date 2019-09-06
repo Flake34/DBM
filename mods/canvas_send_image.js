@@ -32,6 +32,18 @@ author: "LeonZ",
 version: "1.1.0",
 
 //---------------------------------------------------------------------
+// Action Storage Function
+//
+// Stores the relevant variable info for the editor.
+//---------------------------------------------------------------------
+
+variableStorage: function(data, varType) {
+	const type = parseInt(data.storage2);
+	if(type !== varType) return;
+	return ([data.varName3, 'Message']);
+},
+
+//---------------------------------------------------------------------
 // Action Fields
 //
 // These are the fields for the action. These fields are customized
@@ -39,7 +51,7 @@ version: "1.1.0",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["storage", "varName", "channel", "varName2", "message"],
+fields: ["storage", "varName", "channel", "varName2", "message", "Spoiler", "storage2", "varName3"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -85,7 +97,28 @@ html: function(isEvent, data) {
 </div><br><br><br>
 <div style="padding-top: 8px;">
 	Message:<br>
-	<textarea id="message" rows="8" placeholder="Insert message here..." style="width: 99%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
+	<textarea id="message" rows="2" placeholder="Insert message here..." style="width: 94%"></textarea>
+</div><br>
+<div style="padding-top: 8px;">
+	<div style="float: left; width: 94%;">
+		Image Spoiler:<br>
+		<select id="Spoiler" class="round">
+			<option value="0" selected>No</option>
+			<option value="1">Yes</option>
+		</select><br>
+	</div>
+</div><br><br>
+<div>
+	<div style="float: left; width: 35%;">
+		Store In:<br>
+		<select id="storage2" class="round" onchange="glob.variableChange(this, 'varNameContainer3')">
+			${data.variables[0]}
+		</select>
+	</div>
+	<div id="varNameContainer3" style="display: none; float: right; width: 60%;">
+		Variable Name:<br>
+		<input id="varName3" class="round" type="text">
+	</div>
 </div>`
 },
 
@@ -102,6 +135,7 @@ init: function() {
 
 	glob.refreshVariableList(document.getElementById('storage'));
 	glob.sendTargetChange(document.getElementById('channel'), 'varNameContainer2');
+	glob.variableChange(document.getElementById('storage2'), 'varNameContainer3');
 },
 
 //---------------------------------------------------------------------
@@ -132,16 +166,28 @@ action: function(cache) {
 	const ctx = canvas.getContext('2d');
 	ctx.drawImage(image, 0, 0, image.width, image.height)
 	var fs = require("fs");
-	var buf = canvas.toBuffer();
-	fs.writeFileSync("test.png", buf);
-	const attachment = new Discord.Attachment(canvas.toBuffer(), 'image.png');
-	if(Array.isArray(target)) {
-		this.callListFunc(target, 'send', [this.evalMessage(data.message, cache),attachment]);
-	} else if(target && target.send) {
-		target.send(this.evalMessage(data.message, cache),attachment);
-	} else {
+	let name;
+	const Spoiler = parseInt(data.Spoiler);
+	switch(Spoiler) {
+		case 0:
+			name = 'image.png';
+			break;
+		case 1:
+			name = 'SPOILER_image.png';
 	}
-	this.callNextAction(cache);
+	const buffer = canvas.toBuffer('image/png');
+	const attachment = new Discord.Attachment(buffer, name);
+	const _this = this;
+	if(target && target.send) {
+		target.send(this.evalMessage(data.message, cache), attachment).then(function(msgobject) {
+			const varName3 = _this.evalMessage(data.varName3, cache);
+			const storage2 = parseInt(data.storage2);
+			_this.storeValue(msgobject, storage2, varName3, cache);
+			_this.callNextAction(cache);
+		})
+	} else {
+		this.callNextAction(cache);
+	}
 },
 
 //---------------------------------------------------------------------
