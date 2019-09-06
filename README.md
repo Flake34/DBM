@@ -31,6 +31,9 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Loop Packs
   - Loop Start
   - Loop End
+- Anchor Packs
+  - Create Anchor
+  - Jump Anchor
 
 ## Raw Data Preview
 - curse_word_detect_event
@@ -65,6 +68,8 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - **Canvas Image Filter** Add filter with value to image
 - **Convert Text to List** Directly convert text to list with separator
 - **Loop Packs** Loop inside action, for lists and loops only
+- **Anchor Packs** Allow user jump to specific action with ID call, no longer need action number
+
 ## Raw Data Function
 - **curse_word_detect_event** This event will detect all message send by all of member and then detect if include in the `curse list`
 - **rank_command** Require mod `Store Member Data List` A rank system allow find the command author `xp` data and rank in global
