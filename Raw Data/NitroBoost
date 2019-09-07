@@ -1,0 +1,16 @@
+{
+  "name": "nitroboost",
+  "temp": "msgobj",
+  "event-type": "2",
+  "_id": "bpJBS",
+  "actions": [
+    {
+      "behavior": "1",
+      "interpretation": "1",
+      "code": "var msgobj = tempVars(\"msgobj\")\nvar nitro = [\"USER_PREMIUM_GUILD_SUBSCRIPTION\", \"USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1\", \"USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2\", \"USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3\"]\nvar type = nitro.findIndex((a) => a === msgobj.type);\nif (type != -1) {\n  var server = this.getServer(\"\",0,cache);\n  var Nitro = {}\n  Nitro.Count = server.premiumSubscriptionCount;\n  Nitro.Tier = server.premiumTier;\n  Nitro.member = msgobj.author;\n  this.storeValue(Nitro,1,\"Nitro\",cache);\n  this.callNextAction(cache);\n}",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    }
+  ]
+}
