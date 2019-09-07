@@ -1,0 +1,199 @@
+{
+  "name": "myprofile",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "YeKYp",
+  "actions": [
+    {
+      "url": "resources/profile.png",
+      "storage": "1",
+      "varName": "profile",
+      "name": "Canvas Create Image"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "16",
+      "storage": "1",
+      "varName2": "avatarurl",
+      "name": "Store Member Info"
+    },
+    {
+      "url": "${tempVars(\"avatarurl\")}",
+      "storage": "1",
+      "varName": "avatar",
+      "name": "Canvas Create Image"
+    },
+    {
+      "storage": "1",
+      "varName": "avatar",
+      "mirror": "0",
+      "rotation": "0",
+      "width": "150",
+      "height": "150",
+      "name": "Canvas Image Options"
+    },
+    {
+      "storage": "1",
+      "varName": "avatar",
+      "circleinfo": "1",
+      "radius": "0",
+      "name": "Canvas Edit Image Border"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "2",
+      "storage": "1",
+      "varName2": "name",
+      "name": "Store Member Info"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "1",
+      "storage": "1",
+      "varName2": "id",
+      "name": "Store Member Info"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "20",
+      "storage": "1",
+      "varName2": "discrim",
+      "name": "Store Member Info"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "x": "264.13",
+      "y": "40.82",
+      "fontPath": "fonts/LibreBaskerville-Regular.ttf",
+      "fontColor": "FFFFFF",
+      "fontSize": "13",
+      "align": "0",
+      "text": "${tempVars(\"name\")}",
+      "name": "Canvas Draw Text on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "x": "264.75",
+      "y": "63.44",
+      "fontPath": "fonts/LibreBaskerville-Regular.ttf",
+      "fontColor": "FFFFFF",
+      "fontSize": "10",
+      "align": "0",
+      "text": "${tempVars(\"id\")}",
+      "name": "Canvas Draw Text on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "x": "264.54",
+      "y": "80.78",
+      "fontPath": "fonts/LibreBaskerville-Regular.ttf",
+      "fontColor": "FFFFFF",
+      "fontSize": "13",
+      "align": "0",
+      "text": "${tempVars(\"discrim\")}",
+      "name": "Canvas Draw Text on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "x": "280",
+      "y": "185",
+      "fontPath": "fonts/LibreBaskerville-Regular.ttf",
+      "fontColor": "FFFFFF",
+      "fontSize": "13",
+      "align": "8",
+      "text": "XP : 23 / 100",
+      "name": "Canvas Draw Text on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "storage2": "1",
+      "varName2": "avatar",
+      "x": "25",
+      "y": "25",
+      "name": "Canvas Draw Image on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "bg_xp",
+      "type": "0",
+      "width": "256",
+      "height": "16",
+      "lineWidth": "8",
+      "lineCap": "0",
+      "percent": "100",
+      "color": "FFFFFF",
+      "name": "Canvas Generate Progress Bar"
+    },
+    {
+      "storage": "1",
+      "varName": "fullxp",
+      "type": "0",
+      "width": "250",
+      "height": "10",
+      "lineWidth": "5",
+      "lineCap": "1",
+      "percent": "100",
+      "color": "17BFFF",
+      "name": "Canvas Generate Progress Bar"
+    },
+    {
+      "storage": "1",
+      "varName": "xp",
+      "type": "0",
+      "width": "250",
+      "height": "10",
+      "lineWidth": "5",
+      "lineCap": "1",
+      "percent": "23",
+      "color": "0047CD",
+      "name": "Canvas Generate Progress Bar"
+    },
+    {
+      "storage": "1",
+      "varName": "fullxp",
+      "storage2": "1",
+      "varName2": "xp",
+      "x": "0",
+      "y": "0",
+      "name": "Canvas Draw Image on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "bg_xp",
+      "storage2": "1",
+      "varName2": "fullxp",
+      "x": "3",
+      "y": "3",
+      "name": "Canvas Draw Image on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "storage2": "1",
+      "varName2": "bg_xp",
+      "x": "27",
+      "y": "187",
+      "name": "Canvas Draw Image on Image"
+    },
+    {
+      "storage": "1",
+      "varName": "profile",
+      "channel": "0",
+      "varName2": "",
+      "message": "Profile Card for ${tempVars(\"name\")}",
+      "Spoiler": "0",
+      "storage2": "0",
+      "varName3": "",
+      "name": "Canvas Send Image"
+    }
+  ]
+}
