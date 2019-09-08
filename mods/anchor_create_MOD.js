@@ -23,12 +23,11 @@ section: "Other Stuff",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	return `ID (${data.id})`;
+	return !!data.description ? `<font color="${data.color}">${data.description}</font>` : `Create ${!!data.anchor_id ? `the "<font color="${data.color}">${data.anchor_id}</font>" anchor at the current position!` : 'an anchor!'}`;
 },
 
-//https://github.com/LeonZ2019/
-author: "LeonZ",
-version: "1.1.0",
+author: "Deus Corvi && LeonZ",
+version: "1.0.0",	// Added in 1.9.6
 
 //---------------------------------------------------------------------
 // Action Fields
@@ -38,7 +37,7 @@ version: "1.1.0",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["id"],
+fields: ["anchor_id", "color", "description"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -58,12 +57,28 @@ fields: ["id"],
 
 html: function(isEvent, data) {
 	return `
-<div>
-	<div style="float: left; width: 100%;">
-		Create ID:<br>
-		<input id="id" class="round" type="text">
+	<div>
+		<p>
+			<u>Mod Info:</u><br>
+			This mod creates an anchor point for you to jump to without<br>
+			having to edit other jumps or skips.
+		</p>
+	</div><br>
+	<div style="float: left; width: 74%;">
+	  Anchor ID:<br>
+		<input type="text" class="round" id="anchor_id"><br>
 	</div>
-</div>`
+	<div style="float: left; width: 24%;">
+		Anchor Color:<br>
+		<input type="color" id="color"><br>
+	</div>
+	<div>
+	<div style="float: left; width: 98%;">
+		Description:<br>
+		<input type="text" class="round" id="description">
+	</div>
+</div>
+	`
 },
 
 //---------------------------------------------------------------------
@@ -86,7 +101,6 @@ init: function() {
 //---------------------------------------------------------------------
 
 action: function(cache) {
-	const data = cache.actions[cache.index];
 	this.callNextAction(cache);
 },
 
