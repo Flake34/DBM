@@ -68,7 +68,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - **Canvas Image Filter** Add filter with value to image
 - **Convert Text to List** Directly convert text to list with separator
 - **Loop Packs** Loop inside action, for lists and loops only
-- **Anchor Packs** Allow user jump to specific action with ID call, no longer need action number
+- **Anchor Packs** Allow user jump to specific action with ID call, no longer need action number, color and description just for note only
 
 ## Raw Data Function
 - **curse_word_detect_event** This event will detect all message send by all of member and then detect if include in the `curse list`
