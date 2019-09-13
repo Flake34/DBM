@@ -120,6 +120,7 @@ init: function() {
 
 action: function(cache) {
 	const Canvas = require('canvas');
+	const opentype = require('opentype.js');
 	const data = cache.actions[cache.index];
 	const storage = parseInt(data.storage);
 	const varName = this.evalMessage(data.varName, cache);
@@ -129,62 +130,62 @@ action: function(cache) {
 		return;
 	}
 	const fontPath = this.evalMessage(data.fontPath, cache);
-	const fontName = fontPath.slice(fontPath.lastIndexOf("/")+1,fontPath.lastIndexOf("."))
-	const fontColor = this.evalMessage(data.fontColor, cache);
+	let fontColor = this.evalMessage(data.fontColor, cache);
+	if (fontColor.startsWith("#") == false) {
+		fontColor = "#"+fontColor;
+	}
 	let fontSize = parseInt(this.evalMessage(data.fontSize, cache));
 	if (isNaN(fontSize)) {
 		fontSize = 10;
 	}
 	const align = parseInt(data.align);
-	const x = parseInt(this.evalMessage(data.x, cache));
-	const y = parseInt(this.evalMessage(data.y, cache));
+	let x = parseFloat(this.evalMessage(data.x, cache));
+	let y = parseFloat(this.evalMessage(data.y, cache));
 	const text = this.evalMessage(data.text, cache);
 	const image = new Canvas.Image();
 	image.src = imagedata;
 	const canvas = Canvas.createCanvas(image.width,image.height);
 	const ctx = canvas.getContext('2d');
 	ctx.drawImage(image, 0, 0, image.width, image.height);
-	Canvas.registerFont(fontPath, {family:fontName})
-	ctx.font = fontSize+"px "+fontName;
+	const font = opentype.loadSync(fontPath);
+	let textpath = font.getPath(text, 0, 0, fontSize);
+	var bounder = textpath.getBoundingBox();
+	let width = bounder.x2 - bounder.x1;
+	let height = bounder.y2 - bounder.y1;
 	switch(align) {
-		case 0:
-			ctx.textAlign = "left";
-			ctx.textBaseline = "top";
-			break;
 		case 1:
-			ctx.textAlign = "center";
-			ctx.textBaseline = "top";
+			x -= width / 2;
 			break;
 		case 2:
-			ctx.textAlign = "right";
-			ctx.textBaseline = "top";
+			x -= width;
 			break;
 		case 3:
-			ctx.textAlign = "left";
-			ctx.textBaseline = "middle";
+			y -= height / 2;
 			break;
 		case 4:
-			ctx.textAlign = "center";
-			ctx.textBaseline = "middle";
+			x -= width / 2;
+			y -= height / 2;
 			break;
 		case 5:
-			ctx.textAlign = "right";
-			ctx.textBaseline = "middle";
+			x -= width;
+			y -= height / 2;
 			break;
 		case 6:
-			ctx.textAlign = "left";
-			ctx.textBaseline = "bottom"; 
+			y -= height;
 			break;
 		case 7:
-			ctx.textAlign = "center";
-			ctx.textBaseline = "bottom"; 
+			x -= width / 2;
+			y -= height;
 			break;
 		case 8:
-			ctx.textAlign = "right";
-			ctx.textBaseline = "bottom"; 
+			x -= width;
+			y -= height;
 	}
-	ctx.fillStyle = "#"+fontColor;
-	ctx.fillText(text, x, y);
+	x -= bounder.x1;
+	y -= bounder.y1;
+	const Path = font.getPath(text, x, y, fontSize);
+	Path.fill = fontColor;
+	Path.draw(ctx);
 	const result = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 	this.storeValue(result, storage, varName, cache);
 	this.callNextAction(cache);
