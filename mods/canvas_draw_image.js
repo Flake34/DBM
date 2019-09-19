@@ -39,7 +39,7 @@ version: "1.1.0",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["storage", "varName", "storage2", "varName2", "x", "y"],
+fields: ["storage", "varName", "storage2", "varName2", "x", "y", "effect"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -92,6 +92,15 @@ html: function(isEvent, data) {
 		Y Position:<br>
 		<input id="y" class="round" type="text" value="0"><br>
 	</div>
+</div><br><br><br>
+<div style="padding-top: 8px;">
+	<div style="float: left; width: 45%;">
+		Draw Effect:<br>
+		<select id="effect" class="round">
+			<option value="0" selected>Overlay</option>
+			<option value="1">Mask</option>
+		</select>
+	</div>
 </div>`
 },
 
@@ -129,24 +138,29 @@ action: function(cache) {
 	}
 	const storage2 = parseInt(data.storage2);
 	const varName2 = this.evalMessage(data.varName2, cache);
-	const image2 = this.getVariable(storage2, varName2, cache);
-	if(!image2) {
+	const imagedata2 = this.getVariable(storage2, varName2, cache);
+	if(!imagedata2) {
 		this.callNextAction(cache);
 		return;
 	}
 	const x = parseInt(this.evalMessage(data.x, cache));
 	const y = parseInt(this.evalMessage(data.y, cache));
+	const effect = parseInt(data.effect);
 	const image = new Canvas.Image();
 	image.src = imagedata;
+	const image2 = new Canvas.Image();
+	image2.src = imagedata2;
 	const canvas = Canvas.createCanvas(image.width,image.height);
 	const ctx = canvas.getContext('2d');
 	ctx.drawImage(image, 0, 0, image.width, image.height);
-	Canvas.loadImage(image2).then((image2) => {
-		ctx.drawImage(image2, x, y, image2.width, image2.height);
-		const result = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-		this.storeValue(result, storage, varName, cache);
-		this.callNextAction(cache);
-	})
+	switch(effect) {
+		case 1:
+			ctx.globalCompositeOperation = 'destination-out';
+	}
+	ctx.drawImage(image2, x, y, image2.width, image2.height);
+	const result = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	this.storeValue(result, storage, varName, cache);
+	this.callNextAction(cache);
 },
 
 //---------------------------------------------------------------------
