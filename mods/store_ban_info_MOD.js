@@ -23,7 +23,7 @@ section: "Member Control",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const info = ['Banner', 'Banned User', 'Reason', 'Total Banned Count'];
+	const info = ['Banner', 'Banned User', 'Reason', 'Banned Date', 'Banned Timestamp', 'Total Banned Count'];
 	return `${data.member} - ${info[data.info]}`;
 },
 
@@ -50,7 +50,12 @@ variableStorage: function(data, varType) {
 			dataType = 'Text';
 			break;
 		case 3:
+			dataType = 'Date';
+			break;
+		case 4:
+		case 5:
 			dataType = 'Number';
+			break;
 	}
 	return ([data.varName, dataType]);
 },
@@ -96,7 +101,9 @@ html: function(isEvent, data) {
 			<option value="0" selected>Banner User Object</option>
 			<option value="1">Banned User Object</option>
 			<option value="2">Reason</option>
-			<option value="3">Total Banned Count (Included Bot)</option>
+			<option value="3">Banned Date</option>
+			<option value="4">Banned Timestamp</option>
+			<option value="5">Total Banned Count (Included Bot)</option>
 		</select><br>
 	</div>
 </div><br><br><br>
@@ -130,7 +137,7 @@ action: function(cache) {
 	const storage = parseInt(data.storage);
 	const varName = this.evalMessage(data.varName, cache);
 	let result;
-	if (info !== 3) {
+	if (info !== 5) {
 		let options = {};
 		options.type = 22;
 		server.fetchAuditLogs(options).then(Audits => {
@@ -144,6 +151,12 @@ action: function(cache) {
 					break;
 				case 2:
 					result = banned.reason;
+					break;
+				case 3:
+					result = banned.createdAt;
+					break;
+				case 4:
+					result = banned.createdTimestamp;
 					break;
 			}
 			if (result !== undefined) {
