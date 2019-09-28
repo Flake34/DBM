@@ -11,6 +11,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Canvas Draw Text on Image (Updated supported all of .ttf and .oft font file)
 - Store Ban Info MOD (Added Banner (Ban executor), Banned User (Target), Reason, Banned Date, Banned Timestamp, Ban count (Include Bot))
 - Prune Member MOD (Added Day since member inactive and reason)
+- Edit Item from List MOD (Edit specific item value by position)
 
 ## Mods Preview
 - Store Image Info
