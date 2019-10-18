@@ -196,32 +196,19 @@ module.exports = {
 				Cooldown.set(cmd.name, new Discord.Collection());
 			}
 			let now = Date.now();
-			let ChannelId;
-			if (typeof msg.channel.guild !== "undefined") {
-				ChannelId = msg.channel.guild.id;
-			} else {
-				ChannelId = msg.channel.id;
-			}
-			var Command = Cooldown.get(cmd.name);
-			var cooldownAmount = (cmd.cooldown || value * 1000);
+			const Command = Cooldown.get(cmd.name);
+			const cooldownAmount = (cmd.cooldown || value * 1000);
 			cmd.cooldown = cooldownAmount;
 			if (Command.has(msg.author.id)) {
-				var Member = Command.get(msg.author.id)
-				if (Member.has(ChannelId)) {
-					let expirationTime = Member.get(ChannelId) + cooldownAmount;
-					if (now < expirationTime) {
-						return ((expirationTime - now) / 1000).toFixed(0);
-					} else {
-						Member.set(ChannelId, now)
-						return 0;
-					}
+				let expirationTime = Command.get(msg.author.id) + cooldownAmount;
+				if (now < expirationTime) {
+					return ((expirationTime - now) / 1000).toFixed(0);
 				} else {
-					Command.get(msg.author.id).set(ChannelId, now);
+					Command.set(msg.author.id, now)
 					return 0;
 				}
 			} else {
-				Command.set(msg.author.id, new Discord.Collection());
-				Command.get(msg.author.id).set(ChannelId, now);
+				Command.set(msg.author.id, now);
 				return 0;
 			}
 		};
