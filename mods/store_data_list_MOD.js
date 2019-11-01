@@ -276,8 +276,8 @@ action: function(cache) {
 	const sort = parseInt(data.sort);
 	const numberBoolean = parseInt(data.numberBoolean);
 	const resultInfo = parseInt(data.resultInfo);
+	let resultFormat = String(this.evalMessage(data.resultFormat, cache));
 	if (resultInfo == 0) {
-		let resultFormat = String(this.evalMessage(data.resultFormat, cache));
 		if (!resultFormat) {
 			resultFormat = String('Name + " " + DataValue');
 		}
@@ -331,7 +331,6 @@ action: function(cache) {
 	for (var i = 0; i < result.length; i++) {
 		result[i].rank = i + 1;
 	}
-	console.log(array0)
 	switch (resultInfo) {
 		case 0:
 			let result0, Name, DataValue;
