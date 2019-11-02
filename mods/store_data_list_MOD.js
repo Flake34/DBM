@@ -351,15 +351,19 @@ action: function(cache) {
 					break;
 		
 			}
+			if (result.length < resultTo) {
+				resultTo = result.length
+			}
 			for (; resultFrom < resultTo; resultFrom++) {
 				Name = result[resultFrom].name;
 				DataValue = result[resultFrom].data;
 				if (numberBoolean == 0) {
-					array1.push(eval(resultFormat));
+					array1.push(eval(resultFormat) + '\n');
 				} else {
-					array1.push(result[resultFrom].rank + eval(resultFormat));
+					array1.push(result[resultFrom].rank + eval(resultFormat) + '\n');
 				}
 			}
+			array1 = array1.join("");
 			this.storeValue(array1, storage, varName, cache);
 			break;
 		case 1:
