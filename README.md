@@ -36,6 +36,9 @@ Discord Bot Maker Raw Data & Mods & Scripts
   - Jump Anchor
 - Delete Bulk Messages MOD
 - Edit Embed Object MOD
+- Set Time Restriction MOD
+- Store Data List MOD
+- Store Ban Info MOD
 
 ## Raw Data Preview
 - curse_word_detect_event
