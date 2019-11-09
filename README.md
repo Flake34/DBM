@@ -39,6 +39,7 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Set Time Restriction MOD
 - Store Data List MOD
 - Store Ban Info MOD
+- Canvas Crop Image
 
 ## Raw Data Preview
 - curse_word_detect_event
