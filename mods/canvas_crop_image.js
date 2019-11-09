@@ -179,12 +179,9 @@ action: function(cache) {
 	if (croph.endsWith('%')) {
 		croph = image.height * parseFloat(croph) / 100;
 	}
-	console.log(cropw);
-	console.log(croph);
 	const align = parseInt(data.align);
 	let positionx;
 	let positiony;
-	console.log(align)
 	switch(align) {
 		case 0:
 			positionx = 0;
@@ -224,7 +221,6 @@ action: function(cache) {
 			break;
 		case 9:
 			const align2 = parseInt(data.align2);
-			console.log(data);
 			const pX = parseFloat(this.evalMessage(data.positionx, cache));
 			const pY = parseFloat(this.evalMessage(data.positiony, cache));
 			switch(align2) {
@@ -267,8 +263,6 @@ action: function(cache) {
 			}
 			break;
 	}
-	console.log(positionx);
-	console.log(positiony);
 	const canvas = Canvas.createCanvas(cropw,croph);
 	const ctx = canvas.getContext('2d');
 	ctx.drawImage(image, positionx, positiony);
