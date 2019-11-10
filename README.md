@@ -6,6 +6,13 @@ Discord Bot Maker Raw Data & Mods & Scripts
 - Script - Copy raw and paste to Run Script action
 - Mods - Download and paste to DBM action folder ("\steamapps\common\Discord Bot Maker\actions")
 
+## Beta Mods Preview
+- Canvas Draw Image on Image (Added draw effect : Overlay, Mask)
+- Canvas Draw Text on Image (Updated supported all of .ttf and .oft font file)
+- Store Ban Info MOD (Added Banner (Ban executor), Banned User (Target), Reason, Banned Date, Banned Timestamp, Ban count (Include Bot))
+- Prune Member MOD (Added Day since member inactive and reason)
+- Edit Item from List MOD (Edit specific item value by position)
+
 ## Mods Preview
 - Store Image Info
 - Unban Member

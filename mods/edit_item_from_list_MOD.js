@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Canvas Draw Image on Image",
+name: "Edit Item from List MOD",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Canvas Draw Image on Image",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Image Editing",
+section: "Lists and Loops",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,13 +23,8 @@ section: "Image Editing",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const storeTypes = ["", "Temp Variable", "Server Variable", "Global Variable"];
-	return `${storeTypes[parseInt(data.storage2)]} (${data.varName2}) -> ${storeTypes[parseInt(data.storage)]} (${data.varName})`;
+	return `Edit "${data.value}" at position ${data.position}`;
 },
-
-//https://github.com/LeonZ2019/
-author: "LeonZ",
-version: "1.1.0",
 
 //---------------------------------------------------------------------
 // Action Fields
@@ -39,7 +34,7 @@ version: "1.1.0",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["storage", "varName", "storage2", "varName2", "x", "y", "effect"],
+fields: ["storage", "varName", "position", "value"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -60,46 +55,25 @@ fields: ["storage", "varName", "storage2", "varName2", "x", "y", "effect"],
 html: function(isEvent, data) {
 	return `
 <div>
-	<div style="float: left; width: 45%;">
-		Source Image:<br>
+	<div style="float: left; width: 35%;">
+		Source List:<br>
 		<select id="storage" class="round" onchange="glob.refreshVariableList(this)">
 			${data.variables[1]}
-		</select>
+		</select><br>
 	</div>
-	<div id="varNameContainer" style="float: right; width: 50%;">
+	<div id="varNameContainer" style="float: right; width: 60%;">
 		Variable Name:<br>
-		<input id="varName" class="round" type="text" list="variableList"><br>
+		<input id="varName" class="round varSearcher" type="text" list="variableList"><br>
 	</div>
 </div><br><br><br>
-<div style="padding-top: 8px;">
-	<div style="float: left; width: 45%;">
-		Image that is Drawn:<br>
-		<select id="storage2" class="round">
-			${data.variables[1]}
-		</select>
+<div>
+	<div style="float: left; width: 39%;">
+		Position:<br>
+		<input id="position" class="round" type="text"><br>
 	</div>
-	<div id="varNameContainer2" style="float: right; width: 50%;">
-		Variable Name:<br>
-		<input id="varName2" class="round" type="text" list="variableList"><br>
-	</div>
-</div><br><br><br>
-<div style="padding-top: 8px;">
-	<div style="float: left; width: 50%;">
-		X Position:<br>
-		<input id="x" class="round" type="text" value="0"><br>
-	</div>
-	<div style="float: right; width: 50%;">
-		Y Position:<br>
-		<input id="y" class="round" type="text" value="0"><br>
-	</div>
-</div><br><br><br>
-<div style="padding-top: 8px;">
-	<div style="float: left; width: 45%;">
-		Draw Effect:<br>
-		<select id="effect" class="round">
-			<option value="0" selected>Overlay</option>
-			<option value="1">Mask</option>
-		</select>
+	<div style="padding-left: 8px; float: left; width: 61%;">
+		Value:<br>
+		<input id="value" class="round" type="text">
 	</div>
 </div>`
 },
@@ -116,6 +90,7 @@ init: function() {
 	const {glob, document} = this;
 
 	glob.refreshVariableList(document.getElementById('storage'));
+
 },
 
 //---------------------------------------------------------------------
@@ -127,39 +102,15 @@ init: function() {
 //---------------------------------------------------------------------
 
 action: function(cache) {
-	const Canvas = require('canvas');
 	const data = cache.actions[cache.index];
 	const storage = parseInt(data.storage);
 	const varName = this.evalMessage(data.varName, cache);
-	const imagedata = this.getVariable(storage, varName, cache);
-	if(!imagedata) {
-		this.callNextAction(cache);
-		return;
+	const list = this.getVariable(storage, varName, cache);
+	const position = parseInt(this.evalMessage(data.position));
+	const val = this.evalMessage(data.value, cache);
+	if (list.length > position) {
+		list.position = val;
 	}
-	const storage2 = parseInt(data.storage2);
-	const varName2 = this.evalMessage(data.varName2, cache);
-	const imagedata2 = this.getVariable(storage2, varName2, cache);
-	if(!imagedata2) {
-		this.callNextAction(cache);
-		return;
-	}
-	const x = parseInt(this.evalMessage(data.x, cache));
-	const y = parseInt(this.evalMessage(data.y, cache));
-	const effect = parseInt(data.effect);
-	const image = new Canvas.Image();
-	image.src = imagedata;
-	const image2 = new Canvas.Image();
-	image2.src = imagedata2;
-	const canvas = Canvas.createCanvas(image.width,image.height);
-	const ctx = canvas.getContext('2d');
-	ctx.drawImage(image, 0, 0, image.width, image.height);
-	switch(effect) {
-		case 1:
-			ctx.globalCompositeOperation = 'destination-out';
-	}
-	ctx.drawImage(image2, x, y, image2.width, image2.height);
-	const result = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	this.storeValue(result, storage, varName, cache);
 	this.callNextAction(cache);
 },
 
