@@ -192,7 +192,11 @@ action: function(cache) {
 		canvas = Canvas.createCanvas(height,height);
 	}
 	const ctx = canvas.getContext('2d');
-	ctx.strokeStyle = "#"+color;
+	if (color.startsWith("#")) {
+		ctx.strokeStyle = color;
+	} else {
+		ctx.strokeStyle = "#"+color;
+	}
 	ctx.lineCap = Cap;
 	ctx.lineWidth = lineWidth;
 	if (type == 0) {
