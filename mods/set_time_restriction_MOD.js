@@ -25,7 +25,7 @@ module.exports = {
 	subtitle: function (data) {
 
 		let value = parseInt(data.value);
-		return `Command Cooldown: ${value} seconds`;
+		return `Command Cooldown: ${parseInt(data.value)/1000} seconds`;
 	},
 
 	//---------------------------------------------------------------------
@@ -54,14 +54,10 @@ module.exports = {
 	// Stores the relevant variable info for the editor.
 	//---------------------------------------------------------------------
 
-	//variableStorage: function (data, varType) {
-	//},
-
 	variableStorage: function (data, varType) {
 		const type = parseInt(data.storage);
 		if (type !== varType) return;
-		let dataType = 'Number';
-		return ([data.varName]);
+		return ([data.varName, 'Number']);
 	},
 
 	//---------------------------------------------------------------------
@@ -133,6 +129,8 @@ module.exports = {
 		const {glob, document} = this;
 
 		glob.variableChange(document.getElementById('storage'), 'varNameContainer');
+		glob.onChangeTrue(document.getElementById('iftrue'));
+		glob.onChangeFalse(document.getElementById('iffalse'));
 	},
 
 	//---------------------------------------------------------------------
@@ -160,7 +158,7 @@ module.exports = {
 				}
 			}
 		});
-		const timeLeft = this.TimeRestriction(msg, cmd, value);
+		const timeLeft = (this.TimeRestriction(msg, cmd, value) / 1000).toFixed(1);
 		//Check for the result
 
 		let result;
@@ -196,19 +194,32 @@ module.exports = {
 				Cooldown.set(cmd.name, new Discord.Collection());
 			}
 			let now = Date.now();
-			const Command = Cooldown.get(cmd.name);
-			const cooldownAmount = (cmd.cooldown || value * 1000);
+			let ChannelId;
+			if (typeof msg.channel.guild !== "undefined") {
+				ChannelId = msg.channel.guild.id;
+			} else {
+				ChannelId = msg.channel.id;
+			}
+			var Command = Cooldown.get(cmd.name);
+			var cooldownAmount = (cmd.cooldown || value);
 			cmd.cooldown = cooldownAmount;
 			if (Command.has(msg.author.id)) {
-				let expirationTime = Command.get(msg.author.id) + cooldownAmount;
-				if (now < expirationTime) {
-					return ((expirationTime - now) / 1000).toFixed(0);
+				var Member = Command.get(msg.author.id)
+				if (Member.has(ChannelId)) {
+					let expirationTime = Member.get(ChannelId) + cooldownAmount;
+					if (now < expirationTime) {
+						return (expirationTime - now).toFixed(0);
+					} else {
+						Member.set(ChannelId, now)
+						return 0;
+					}
 				} else {
-					Command.set(msg.author.id, now)
+					Command.get(msg.author.id).set(ChannelId, now);
 					return 0;
 				}
 			} else {
-				Command.set(msg.author.id, now);
+				Command.set(msg.author.id, new Discord.Collection());
+				Command.get(msg.author.id).set(ChannelId, now);
 				return 0;
 			}
 		};
