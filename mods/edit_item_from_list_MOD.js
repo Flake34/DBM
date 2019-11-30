@@ -109,7 +109,7 @@ action: function(cache) {
 	const position = parseInt(this.evalMessage(data.position));
 	const val = this.evalMessage(data.value, cache);
 	if (list.length > position) {
-		list.position = val;
+		list[position] = val;
 	}
 	this.callNextAction(cache);
 },
