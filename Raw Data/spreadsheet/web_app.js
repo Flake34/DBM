@@ -1,4 +1,5 @@
 var SHEET_NAME = "Sheet1";
+PropertiesService.getScriptProperties().setProperty('key', 'Spreadsheet_ID');
 var SCRIPT_PROP = PropertiesService.getScriptProperties();
 
 function doGet(e){
