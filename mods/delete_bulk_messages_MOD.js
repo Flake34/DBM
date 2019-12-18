@@ -125,7 +125,7 @@ html: function(isEvent, data) {
 	</div><br><br><br>
 	<div>
 		<div style="float: left; width: 40%;">
-			If Delete Bulk Message Fails:<br>
+			If Delete Bulk Messages Fails:<br>
 			<select id="iffalse" class="round" onchange="glob.onChangeFalse(this)">
 				<option value="0" selected>Continue Actions</option>
 				<option value="1">Stop Action Sequence</option>
