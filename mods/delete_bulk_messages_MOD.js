@@ -39,7 +39,7 @@ version: "1.1.0",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["channel", "varName", "count", "option", "msgid", "Con0", "Con1", "Con2", "Con3", "Con4", "Con5"],
+fields: ["channel", "varName", "count", "option", "msgid", "Con0", "Con1", "Con2", "Con3", "Con4", "Con5", "iffalse", "iffalseVal"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -122,6 +122,18 @@ html: function(isEvent, data) {
 				<option value="2">Yes</option>
 			</select><br>
 		</div>
+	</div><br><br><br>
+	<div>
+		<div style="float: left; width: 40%;">
+			If Delete Bulk Message Fails:<br>
+			<select id="iffalse" class="round" onchange="glob.onChangeFalse(this)">
+				<option value="0" selected>Continue Actions</option>
+				<option value="1">Stop Action Sequence</option>
+				<option value="2">Jump To Action</option>
+				<option value="3">Skip Next Actions</option>
+			</select>
+		</div>
+		<div id="iffalseContainer" style="padding-left: 3%; display: none; float: left; width: 60%;"><span id="iffalseName">Action Number</span>:<br><input id="iffalseVal" class="round" type="text"></div>
 	</div>
 </div>`
 },
@@ -148,6 +160,7 @@ init: function() {
 	};
 	glob.channelChange(document.getElementById('channel'), 'varNameContainer')
 	glob.onChange2(document.getElementById('option'));
+	glob.onChangeFalse(document.getElementById('iffalse'));
 },
 
 //---------------------------------------------------------------------
@@ -262,7 +275,13 @@ action: function(cache) {
 			}
 			source.bulkDelete(messages).then(function() {
 				this.callNextAction(cache);
-			}.bind(this)).catch(this.displayError.bind(this, data, cache));
+			}.bind(this)).catch(err => {
+				if (err.message == "You can only bulk delete messages that are under 14 days old.") {
+					this.executeResults(false, data, cache);
+				} else {
+					this.displayError.bind(this, data, cache);
+				}
+			})
 		}.bind(this)).catch(this.displayError.bind(this, data, cache));
 	} else {
 		this.callNextAction(cache);
