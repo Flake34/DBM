@@ -175,9 +175,13 @@ action: function(cache) {
 	let croph = this.evalMessage(data.height, cache);
 	if (cropw.endsWith('%')) {
 		cropw = image.width * parseFloat(cropw) / 100;
+	} else {
+		cropw = parseFloat(cropw)
 	}
 	if (croph.endsWith('%')) {
 		croph = image.height * parseFloat(croph) / 100;
+	} else {
+		croph = parseFloat(croph);
 	}
 	const align = parseInt(data.align);
 	let positionx;
