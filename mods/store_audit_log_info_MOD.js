@@ -200,6 +200,9 @@ action: function(cache) {
 	const auditLog = this.getVariable(storage, varName, cache);
 	let result = false;
 	let position;
+	console.log(auditLog)
+	console.log(parseInt(data.info))
+	console.log(auditLog.action)
 	switch (parseInt(data.info)) {
 		case 0:
 			result = auditLog.id;
@@ -210,7 +213,7 @@ action: function(cache) {
 				if (auditLog.target.bot && auditLog.targetType == "USER") {
 					result = "ADD_BOT"
 				} else if (auditLog.targetType == "MESSAGE"){
-					result = "MESSAGE_PIN_UPDATE"
+					result = "CHANNEL_MESSAGE_UPDATE"
 				}
 			}
 			break;
@@ -230,31 +233,43 @@ action: function(cache) {
 			result = auditLog.createdTimestamp;
 			break;
 		case 7:
-			result = auditLog.changes.length;
+			if (auditLog.changes != null) {
+				result = auditLog.changes.length;
+			} else {
+				result = undefined;
+			}
 			break;
 		case 8:
-			position = parseInt(this.evalMessage(data.position, cache));
-			if (!isNaN(position)) {
+			position = parseInt(this.evalMessage(data.position, cache));)
+			if (!isNaN(position) && auditLog.changes != null &&position <= auditLog.changes.length) {
 				result = auditLog.changes[position].key;
 			}
 			break;
 		case 9:
 			position = parseInt(this.evalMessage(data.position, cache));
-			if (!isNaN(position)) {
+			if (!isNaN(position) && auditLog.changes != null &&position <= auditLog.changes.length) {
 				result = auditLog.changes[position].old;
 			}
 			break;
 		case 10:
 			position = parseInt(this.evalMessage(data.position, cache));
-			if (!isNaN(position)) {
+			if (!isNaN(position) && auditLog.changes != null &&position <= auditLog.changes.length) {
 				result = auditLog.changes[position].new;
 			}
 			break;
 		case 11:
-			result = auditLog.reason;
+			if (auditLog.reason != null) {
+				result = auditLog.reason;
+			} else {
+				result = undefined;
+			}
 			break;
 		case 12:
-			result = auditLog.extra;
+			if (auditLog.reason != null) {
+				result = auditLog.extra;
+			} else {
+				result = undefined;
+			}
 			break;
 	}
 	const storage2 = parseInt(data.storage2);
