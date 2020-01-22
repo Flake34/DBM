@@ -206,6 +206,13 @@ action: function(cache) {
 			break;
 		case 1:
 			result = auditLog.action;
+			if (!result || typeof result == "undefined") {
+				if (auditLog.target.bot && auditLog.targetType == "USER") {
+					result = "ADD_BOT"
+				} else if (auditLog.targetType == "MESSAGE"){
+					result = "MESSAGE_PIN_UPDATE"
+				}
+			}
 			break;
 		case 2:
 			result = auditLog.executor;
