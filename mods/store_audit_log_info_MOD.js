@@ -240,7 +240,7 @@ action: function(cache) {
 			}
 			break;
 		case 8:
-			position = parseInt(this.evalMessage(data.position, cache));)
+			position = parseInt(this.evalMessage(data.position, cache));
 			if (!isNaN(position) && auditLog.changes != null &&position <= auditLog.changes.length) {
 				result = auditLog.changes[position].key;
 			}

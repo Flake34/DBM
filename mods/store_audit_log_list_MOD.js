@@ -46,7 +46,7 @@ module.exports = {
 		const type = parseInt(data.storage2);
 		if(type !== varType) return;
 		const info = parseInt(data.info);
-		let dataType = 'List';
+		let dataType = 'Audit Log List';
 		return ([data.varName2, dataType]);
 	},
 	
@@ -247,10 +247,12 @@ module.exports = {
 		server.fetchAuditLogs(options).then(audits => {
   			audits.entries.forEach(function(entry) {
 				result.push(entry)
-  			})
+			  })
 			const storage2 = parseInt(data.storage2);
 			const varName2 = this.evalMessage(data.varName2, cache);
-			this.storeValue(result, storage2, varName2, cache);
+			if (result.length != 0) {
+				this.storeValue(result, storage2, varName2, cache);
+			}
 			this.callNextAction(cache);
 		})
 	},
