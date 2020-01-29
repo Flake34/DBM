@@ -200,9 +200,6 @@ action: function(cache) {
 	const auditLog = this.getVariable(storage, varName, cache);
 	let result = false;
 	let position;
-	console.log(auditLog)
-	console.log(parseInt(data.info))
-	console.log(auditLog.action)
 	switch (parseInt(data.info)) {
 		case 0:
 			result = auditLog.id;
@@ -218,7 +215,7 @@ action: function(cache) {
 			}
 			break;
 		case 2:
-			result = auditLog.executor;
+			result = server.members.find(member => member.id == auditLog.executor.id);
 			break;
 		case 3:
 			result = auditLog.target;
