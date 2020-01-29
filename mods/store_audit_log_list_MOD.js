@@ -24,7 +24,7 @@ module.exports = {
 	
 	subtitle: function(data) {
 		const storage = ['All Member', 'Mentioned User', 'Command Author', 'tempVars', 'serverVars', 'globalVars'];
-		const type = ['All Type', 'Update Server', 'Create Channel', 'Update Channel','Delete Channel', 'Create Channel Permission', 'Update Channel Permission', 'Delete Channel Permission', 'Kick Member', 'Prune Members', 'Ban Member', 'Unban Member', 'Update Member', 'Update Member Roles', 'Move Member', 'Disconnect Member', 'Add Bot', 'Create Role', 'Update Role', 'Delete Role', 'Create Invite', 'Update Invite', 'Delete Invite', 'Create Webhook', 'Update Webhook', 'Delete Webhook', 'Create Emoji', 'Update Emoji', 'Delete Emoji', 'Delete Messages', 'Bulk Delete Messages', 'Pin Message', 'Unpin Message', 'Create Integration', 'Update Intergration', 'Delete Integration'];
+		const type = {"0":"All Type","1":"Update Server","10":"Create Channel","11":"Update Channel","12":"Delete Channel","13":"Create Channel Permission","14":"Update Channel Permission","15":"Delete Channel Permission","20":"Kick Member","21":"Prune Members","22":"Ban Member","23":"Unban Member","24":"Update Member","25":"Update Member Roles","26":"Move Member","27":"Disconnect Member","28":"Add Bot","30":"Create Role","31":"Update Role","32":"Delete Role","40":"Create Invite","41":"Update Invite","42":"Delete Invite","50":"Create Webhook","51":"Update Webhook","52":"Delete Webhook","60":"Create Emoji","61":"Update Emoji","62":"Delete Emoji","72":"Delete Messages","73":"Bulk Delete Messages","74":"Pin Message","75":"Unpin Message","76":"Create Integration","77":"Update Intergration","78":"Delete Integration"}
 		if (data.storage == 0 || data.storage == 1 || data.storage == 2) {
 			return `Store ${storage[parseInt(data.storage)]} - ${type[parseInt(data.type)]}`;
 		} else {
@@ -132,9 +132,9 @@ module.exports = {
 				<option value="73">Bulk Delete Messages</option>
 				<option value="74">Pin Message</option>
 				<option value="75">Unpin Message</option>
-				<option value="80">Create Integration</option>
-				<option value="81">Update Integration</option>
-				<option value="82">Delete Integration</option>
+				<option value="76">Create Integration</option>
+				<option value="77">Update Integration</option>
+				<option value="78">Delete Integration</option>
 			</select><br>
 		</div>
 	</div><br><br><br>

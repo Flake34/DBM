@@ -208,9 +208,9 @@ action: function(cache) {
 			result = auditLog.action;
 			if (!result || typeof result == "undefined") {
 				if (auditLog.target.bot && auditLog.targetType == "USER") {
-					result = "ADD_BOT"
+					result = "ADD_BOT";
 				} else if (auditLog.targetType == "MESSAGE"){
-					result = "CHANNEL_MESSAGE_UPDATE"
+					result = "CHANNEL_MESSAGE_UPDATE";
 				}
 			}
 			break;
@@ -218,7 +218,11 @@ action: function(cache) {
 			result = server.members.find(member => member.id == auditLog.executor.id);
 			break;
 		case 3:
-			result = auditLog.target;
+			if (auditLog.target.constructor.name == "User") {
+				result = server.members.find(member => member.id == auditLog.target.id);
+			} else {
+				result = auditLog.target;
+			}
 			break;
 		case 4:
 			result = auditLog.targetType;
@@ -271,7 +275,9 @@ action: function(cache) {
 	}
 	const storage2 = parseInt(data.storage2);
 	const varName2 = this.evalMessage(data.varName2, cache);
-	this.storeValue(result, storage2, varName2, cache);
+	if (result && result != undefined) {
+		this.storeValue(result, storage2, varName2, cache);
+	}
 	this.callNextAction(cache);
 },
 
