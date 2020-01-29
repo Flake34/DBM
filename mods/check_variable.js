@@ -276,15 +276,20 @@ action: function(cache) {
 				break;
 		}
 	}
-	if (parseInt(data.iftrue) == 4) {
-		const errors = {'404': 'There was not an anchor found with that exact anchor ID!'};
-		const actions = cache.actions;
-		let id;
-		if (result) {
-			id = this.evalMessage(data.iftrueVal, cache);
-		} else {
-			id = this.evalMessage(data.iffalseVal, cache);
-		}
+	const errors = {'404': 'There was not an anchor found with that exact anchor ID!'};
+	const actions = cache.actions;
+	let id;
+	if (result) {
+		id = this.evalMessage(data.iftrueVal, cache);
+	} else {
+		id = this.evalMessage(data.iffalseVal, cache);
+	}
+	if (parseInt(data.iftrue) == 4 && result) {
+		const anchorIndex = actions.findIndex((a) => a.name === "Create Anchor" && a.anchor_id === id);
+		if (anchorIndex === -1) throw new Error(errors['404']);
+		cache.index = anchorIndex - 1;
+		this.callNextAction(cache);
+	} else if (parseInt(data.iffalse) == 4 && !result) {
 		const anchorIndex = actions.findIndex((a) => a.name === "Create Anchor" && a.anchor_id === id);
 		if (anchorIndex === -1) throw new Error(errors['404']);
 		cache.index = anchorIndex - 1;
