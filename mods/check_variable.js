@@ -298,7 +298,7 @@ mod: function(DBM) {
 					}
 					break;
 				case 4:
-					const id = this.evalMessage(data.iftrueVal, cache);
+					const id = this.evalMessage(data.iffalseVal, cache);
 					const anchorIndex = cache.actions.findIndex((a) => a.name === "Create Anchor" && a.anchor_id === id);
 					if (anchorIndex === -1) throw new Error(errors['404']);
 					cache.index = anchorIndex - 1;
