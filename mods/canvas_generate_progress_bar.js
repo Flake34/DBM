@@ -201,8 +201,8 @@ action: function(cache) {
 	ctx.lineWidth = lineWidth;
 	if (type == 0) {
 		ctx.beginPath();
-		ctx.moveTo(0, height/2);
-		ctx.lineTo(width*percent/100, height/2);
+		ctx.lineTo(height/4, height/2);
+		ctx.lineTo(width*percent/100-height/4, height/2);
 	} else if (type == 1) {
 		ctx.translate(height / 2, height / 2);
 		ctx.rotate(-0.5 * Math.PI);
