@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the event displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Delete Bulk Messages Event MOD",
+name: "Delete Bulk Messages MOD",
 
 //---------------------------------------------------------------------
 // Is Event
@@ -51,7 +51,7 @@ mod: function(DBM) {
 		const { Bot, Actions } = DBM;
 
 		// Get all events that use this custom event trigger.
-		const events = Bot.$evts["Delete Bulk Messages Event MOD"];
+		const events = Bot.$evts["Delete Bulk Messages MOD"];
 
 		// Ensure there are any.
 		// If the user did not create any events with this trigger, this will be null.
@@ -78,10 +78,10 @@ mod: function(DBM) {
 	// setTimeout(DBM.Test_Event.callAllEvents, 2000);
 	
 	const onReady = DBM.Bot.onReady;
-    DBM.Bot.onReady = function(...params) {
+	DBM.Bot.onReady = function(...params) {
 		DBM.Bot.bot.on("messageDeleteBulk", DBM.LeonZ.messageDeleteBulk);
 		onReady.apply(this, ...params);
-    }
+	}
 	// This message will appear in the console if this mod is installed successfully at runtime.
 	// console.log("Test Event registered!");
 }
