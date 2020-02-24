@@ -1,0 +1,56 @@
+{
+  "name": "twitch-streaming",
+  "temp": "",
+  "event-type": "21",
+  "_id": "wqnXy",
+  "actions": [
+    {
+      "behavior": "1",
+      "interpretation": "1",
+      "code": "let author = tempVars(\"author\");\nif (author.presence.game != null && author.presence.game.name == \"Twitch\") {\n  this.storeValue(author.presence.game.url,1,\"streaming-url\",cache);\n  this.storeValue(author.presence.game.details,1,\"streaming-title\",cache);\n  this.callNextAction(cache);\n}",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "title": "${tempVars(\"streaming-title\")}",
+      "author": "${tempVars(\"author\").user.username}",
+      "color": "",
+      "url": "",
+      "authorIcon": "${tempVars(\"author\").user.displayAvatarURL}",
+      "authorUrl": "https://discordapp.com/users/${tempVars(\"author\").id}",
+      "imageUrl": "",
+      "thumbUrl": "",
+      "timestamp": "true",
+      "debug": "false",
+      "text": "",
+      "year": "",
+      "month": "",
+      "day": "",
+      "hour": "",
+      "minute": "",
+      "second": "",
+      "storage": "1",
+      "varName": "embed",
+      "name": "Create Embed Message"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "message": "[Click me to watch](${tempVars(\"streaming-url\")})",
+      "name": "Set Embed Description"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "channel": "4",
+      "varName2": "",
+      "storage3": "0",
+      "varName3": "",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Send Embed Message"
+    }
+  ],
+  "temp2": "author"
+}
