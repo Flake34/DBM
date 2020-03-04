@@ -102,7 +102,7 @@ async function run () {
   option.radius = 200;
   image = canvas.generateProgress(option)
 
-  //Attach Image 100%
+  //Attach Image
   let attachment = canvas.canvasAttachment(image,"image2.png")
   
   //Send Message
