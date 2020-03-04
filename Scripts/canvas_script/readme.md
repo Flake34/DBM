@@ -2,6 +2,12 @@
 ## Install
 You can put the canvas_script.js file to actions, then use it as `DBM.canvas()`. You also can modified the javascript file for use in other services or softwares than DBM
 
+## NPM Module Required!!!
+- [x] discord.js@11.5.1
+- [x] opentype.js
+- [x] canvas
+- [x] fs
+
 ## Canvas Script Usage
 DBM Example (inside Run Script Action)
 ```javascript
@@ -66,7 +72,8 @@ async function run () {
   //Rotate Image (Rotate 135° Degree)
   image = canvas.rotateImage(image, 135);
   
-  //Resize Image
+  //Resize Image (ignore aspect ratio)
+  //If width and height exist, the aspect ratio option will be disable)
   let option = {}
   option.aspectRatio = true; 
   option.width = "50%"; 
